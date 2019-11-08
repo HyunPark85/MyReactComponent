@@ -2,34 +2,11 @@ import React, {useState} from "react";
 
 import Field from "./field";
 
+const FormControll = ({objKey, title, fields, addData, currentPosition, position}) => {
 
-
-/*
-const formList = [
-    {
-        title: "student information", 
-        objKey: "studentInformation",
-        fields:[
-            {name:"firstName", placeholder:"enter firstname"}, 
-            {name:"lastName", placeholder: "enter lastname"},
-            {name: "dataOfBirth", placeholder: "enter data of birth"},
-            {name:"email", placeholder:"enter email"}
-        ]
-    }
-]
-
-savedData = {
-    studentInformation: {
-        firstName: "hyun",
-        lastName: "park"
-    }
-}
-*/
-
-const FormControll = ({objKey, title, fields, savedData, addData, currentPosition, position, isEditButtonClicked, toggleEdit}) => {
-
-    let [data, setData] = useState(savedData)
+    let [data, setData] = useState({})
     let [isEditMode, setIsEditMode] = useState(false);
+    let [currentEditingPosition, setCurrentEditingPosition] = useState(null)
 
 
     const handleSubmit = (e) => {
@@ -43,7 +20,7 @@ const FormControll = ({objKey, title, fields, savedData, addData, currentPositio
     }
 
     const displayForm = () => {
-        if(currentPosition === position || isEditMode){
+        if(isEditMode || currentPosition === position){
         return (
             <form onSubmit={handleSubmit}>
             {fields.map(({name, placeholder}, index) => {
@@ -65,6 +42,7 @@ const FormControll = ({objKey, title, fields, savedData, addData, currentPositio
 
     const handleEditButton = () => {
         setIsEditMode(true)
+        setCurrentEditingPosition(position)
     }
 
 
@@ -76,12 +54,29 @@ const FormControll = ({objKey, title, fields, savedData, addData, currentPositio
         }
     }
 
+    const displaySummary = () => {
+        if(!data || currentPosition === position || isEditMode){
+            return "";
+        }
+        let values = Object.values(data)
+        return(
+            <ul>
+                {values.map((val,key) => {
+                    return(
+                        <li key={key}>{val}</li>
+                    )
+                })}
+            </ul>
+        )
+    }
+
     return(
-        <div className="container" style={{width: "100%", height: "100px"}}>
+        <div className="container" style={{width: "100%"}}>
             <hr style={{backgroundColor:"black", height: "3px"}}/> 
             <h1 style={{display:"inline"}}>{position + 1}. {title}</h1> 
             {displayEditButton()}
            {displayForm()}
+           {displaySummary()}
         </div>
     )
 }

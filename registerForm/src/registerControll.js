@@ -6,17 +6,12 @@ const RegisterControll = () => {
     
     let [ data, setData ] = useState({})
     let [currentPosition, setCurrentPosition] = useState(0)
-    let [isEditButtonClicked, setIsEditButtonClicked] = useState(false)
 
     const addData = (objKey,newData, isEditMode) => {
         setData({...data,[objKey]: newData})
         if(!isEditMode){
         setCurrentPosition(++currentPosition)
         }
-    }
-
-    const toggleEdit = () => {
-        setIsEditButtonClicked(!isEditButtonClicked)
     }
 
     const requestPost = () => {
@@ -66,8 +61,6 @@ const RegisterControll = () => {
                     currentPosition={currentPosition}
                     position={index}
                     key={index}
-                    isEditButtonClicked={isEditButtonClicked}
-                    toggleEdit={toggleEdit}
                 />
                 )
             })}
