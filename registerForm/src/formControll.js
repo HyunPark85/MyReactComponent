@@ -9,8 +9,7 @@ const FormControll = ({
   addData,
   currentPosition,
   position,
-  isTheEnd,
-  requestPost
+  isTheEnd
 }) => {
   let [data, setData] = useState({});
   let [isEditMode, setIsEditMode] = useState(false);
@@ -18,7 +17,7 @@ const FormControll = ({
 
   const handleSubmit = e => {
     e.preventDefault();
-    addData(objKey, data, isEditMode);
+    addData(objKey, data, isEditMode, isTheEnd);
     setIsEditMode(false);
   };
 
@@ -42,9 +41,9 @@ const FormControll = ({
             );
           })}
           {isTheEnd ? (
-            <button>PLACE ORDER</button>
+            <input type="submit" value="PLACE ORDER" />
           ) : (
-            <input type="submit" value="Save Data" />
+            <input type="submit" value="SAVE DATA" />
           )}
         </form>
       );

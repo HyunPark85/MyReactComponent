@@ -1,6 +1,6 @@
 import React from "react";
 
-const Form = ({ handleSubmit, fields }) => {
+const Form = ({ handleSubmit, fields, buttonVal }) => {
   return (
     <form onSubmit={handleSubmit}>
       {fields.map(({ name, placeholder }, index) => {
@@ -14,7 +14,7 @@ const Form = ({ handleSubmit, fields }) => {
           />
         );
       })}
-      <input type="submit" value="Save Data" />
+      <input type="submit" value={buttonVal} />
     </form>
   );
 };

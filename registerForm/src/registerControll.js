@@ -1,18 +1,27 @@
 import React, { useState, useEffect } from "react";
 
 import FormControll from "./formControll";
-import { request } from "http";
 
 const RegisterControll = ({ formList }) => {
   let [data, setData] = useState({});
   let [currentPosition, setCurrentPosition] = useState(0);
+  let [isTheEnd, setIsTheEnd] = useState(false);
 
-  const addData = (objKey, newData, isEditMode) => {
+  const addData = (objKey, newData, isEditMode, isTheEnd) => {
     setData({ ...data, [objKey]: newData });
     if (!isEditMode) {
       setCurrentPosition(++currentPosition);
     }
+    if (isTheEnd) {
+      setIsTheEnd(true);
+    }
   };
+
+  useEffect(() => {
+    if (isTheEnd) {
+      requestPost();
+    }
+  }, [data]);
 
   const requestPost = () => {
     console.log(data);
@@ -35,7 +44,6 @@ const RegisterControll = ({ formList }) => {
             position={index}
             key={index}
             isTheEnd={formList.length === index + 1}
-            requestPost={requestPost}
           />
         );
       })}
